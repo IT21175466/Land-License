@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "301108390257",
+    "project_id": "land-licence-system",
+    "storage_bucket": "land-licence-system.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:301108390257:android:27ad957b3ebb81986a2ed0",
+        "android_client_info": {
+          "package_name": "com.example.land_license"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "301108390257-0vm0n0snildbqqfhplhfvjbmkjfcf800.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhG7OkFFkb1TzqLAiaeGJR2qxzR9oA1kE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "301108390257-0vm0n0snildbqqfhplhfvjbmkjfcf800.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

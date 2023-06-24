@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:land_license/Add_License_Page.dart';
 import 'package:land_license/Home_Page.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(const MyApp());
 }
 
