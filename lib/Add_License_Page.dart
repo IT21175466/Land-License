@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddLicense extends StatefulWidget {
   const AddLicense({super.key});
@@ -8,6 +10,32 @@ class AddLicense extends StatefulWidget {
 }
 
 class _AddLicenseState extends State<AddLicense> {
+  TextEditingController _LicenseNumberController = TextEditingController();
+  TextEditingController _LicenseNameController = TextEditingController();
+  TextEditingController _LicenseAddressController = TextEditingController();
+  TextEditingController _LicenseWasamaController = TextEditingController();
+
+  File? frontImage;
+  File? backImage;
+
+  final imagePicker = ImagePicker();
+
+  Future getBackImage() async {
+    final bImage = await imagePicker.getImage(source: ImageSource.camera);
+
+    setState(() {
+      backImage = File(bImage!.path);
+    });
+  }
+
+  Future getFrontImage() async {
+    final image = await imagePicker.getImage(source: ImageSource.camera);
+
+    setState(() {
+      frontImage = File(image!.path);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,6 +60,7 @@ class _AddLicenseState extends State<AddLicense> {
           child: Column(
             children: [
               TextField(
+                controller: _LicenseNumberController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
@@ -43,6 +72,7 @@ class _AddLicenseState extends State<AddLicense> {
                 height: 15,
               ),
               TextField(
+                controller: _LicenseNameController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
@@ -54,6 +84,7 @@ class _AddLicenseState extends State<AddLicense> {
                 height: 15,
               ),
               TextField(
+                controller: _LicenseAddressController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
@@ -65,6 +96,7 @@ class _AddLicenseState extends State<AddLicense> {
                 height: 15,
               ),
               TextField(
+                controller: _LicenseWasamaController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
@@ -86,12 +118,21 @@ class _AddLicenseState extends State<AddLicense> {
                 children: [
                   const Spacer(),
                   GestureDetector(
+                    onTap: () {
+                      getFrontImage();
+                    },
                     child: Container(
                       width: 146,
                       height: 112,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(13),
                         color: const Color.fromARGB(50, 277, 277, 277),
+                        image: frontImage != null
+                            ? DecorationImage(
+                                image: FileImage(frontImage!),
+                                fit: BoxFit.cover,
+                              )
+                            : null,
                       ),
                       child: const Column(
                         children: [
@@ -116,12 +157,21 @@ class _AddLicenseState extends State<AddLicense> {
                   ),
                   const Spacer(),
                   GestureDetector(
+                    onTap: () {
+                      getBackImage();
+                    },
                     child: Container(
                       width: 146,
                       height: 112,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(13),
                         color: const Color.fromARGB(50, 277, 277, 277),
+                        image: backImage != null
+                            ? DecorationImage(
+                                image: FileImage(backImage!),
+                                fit: BoxFit.cover,
+                              )
+                            : null,
                       ),
                       child: const Column(
                         children: [
