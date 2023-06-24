@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:land_license/Add_License_Page.dart';
 import 'package:land_license/Home_Page.dart';
 
 void main() {
@@ -33,6 +34,9 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const HomePage(),
+      routes: {
+        '/addLicensePage': (_) => const AddLicense(),
+      },
     );
   }
 }
