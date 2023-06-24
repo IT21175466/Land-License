@@ -36,6 +36,46 @@ class _AddLicenseState extends State<AddLicense> {
     });
   }
 
+  void emptyFileds() {
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: Text("දෝශයකි..!"),
+          content: Text("කරුණාකර තොරතුරු සියල්ල පුරවන්න."),
+          actions: <Widget>[
+            TextButton(
+              child: Text("හරි"),
+              onPressed: () {
+                Navigator.of(dialogContext).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void emptyImages() {
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: Text("දෝශයකි..!"),
+          content: Text("කරුණාකර බලපත්‍ර වල චායාරූප එක් කරන්න."),
+          actions: <Widget>[
+            TextButton(
+              child: Text("හරි"),
+              onPressed: () {
+                Navigator.of(dialogContext).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -201,7 +241,25 @@ class _AddLicenseState extends State<AddLicense> {
                 height: 50,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  String lNumber = _LicenseNumberController.text;
+                  String lName = _LicenseNameController.text;
+                  String lAddress = _LicenseAddressController.text;
+                  String lWasama = _LicenseWasamaController.text;
+
+                  if (lNumber.isEmpty ||
+                      lName.isEmpty ||
+                      lAddress.isEmpty ||
+                      lWasama.isEmpty) {
+                    emptyFileds();
+                  } else if (frontImage == null) {
+                    emptyImages();
+                  } else if (backImage == null) {
+                    emptyImages();
+                  } else {
+                    print("Done");
+                  }
+                },
                 style: ButtonStyle(
                   backgroundColor:
                       const MaterialStatePropertyAll<Color>(Colors.blueAccent),
