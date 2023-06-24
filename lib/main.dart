@@ -40,6 +40,7 @@ class MyApp extends StatelessWidget {
       home: const HomePage(),
       routes: {
         '/addLicensePage': (_) => const AddLicense(),
+        '/home': (_) => const HomePage(),
       },
     );
   }
