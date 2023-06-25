@@ -86,15 +86,15 @@ class _SingleRecordState extends State<SingleRecord> {
                     title: Text(
                       'බලපත්‍ර අංකය :',
                       style: TextStyle(
-                        fontSize: 23,
-                        fontWeight: FontWeight.w700,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
                     subtitle: Text(
                       '$licenseNumber',
                       style: TextStyle(
                         fontSize: 20,
-                        fontWeight: FontWeight.w400,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
@@ -112,15 +112,15 @@ class _SingleRecordState extends State<SingleRecord> {
                     title: Text(
                       'බලපත්‍ර හිමියාගේ නම :',
                       style: TextStyle(
-                        fontSize: 23,
-                        fontWeight: FontWeight.w700,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
                     subtitle: Text(
                       '$licenseName',
                       style: TextStyle(
                         fontSize: 20,
-                        fontWeight: FontWeight.w400,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
@@ -138,15 +138,15 @@ class _SingleRecordState extends State<SingleRecord> {
                     title: Text(
                       'බලපත්‍ර හිමියාගේ ලිපිනය :',
                       style: TextStyle(
-                        fontSize: 23,
-                        fontWeight: FontWeight.w700,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
                     subtitle: Text(
                       '$licenseAddress',
                       style: TextStyle(
                         fontSize: 20,
-                        fontWeight: FontWeight.w400,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
@@ -164,15 +164,15 @@ class _SingleRecordState extends State<SingleRecord> {
                     title: Text(
                       'වසම :',
                       style: TextStyle(
-                        fontSize: 23,
-                        fontWeight: FontWeight.w700,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
                     subtitle: Text(
                       '$licenseWasama',
                       style: TextStyle(
                         fontSize: 20,
-                        fontWeight: FontWeight.w400,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
@@ -184,7 +184,7 @@ class _SingleRecordState extends State<SingleRecord> {
               Text(
                 'බලපත්‍රයේ චායාරූප',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 18,
                   fontWeight: FontWeight.w400,
                 ),
               ),
