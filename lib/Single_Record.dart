@@ -262,6 +262,62 @@ class _SingleRecordState extends State<SingleRecord> {
                     SizedBox(
                       height: 20,
                     ),
+                    ElevatedButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext dialogContext) {
+                            return AlertDialog(
+                              title: Text("පණිවිඩයක්!"),
+                              content: Text(
+                                  "මෙම බලපත්‍රය සහ එම තොරතුරු සියල්ල ඉවත් වී යයි. ඔබට ඉවත් කිරීමට අවශ්‍යද?"),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: Text(
+                                    "ඔව්. ඉවත් කරන්න",
+                                    style: TextStyle(
+                                      color: Colors.redAccent,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(dialogContext).pop();
+                                  },
+                                ),
+                                TextButton(
+                                  child: Text("නැත"),
+                                  onPressed: () {
+                                    Navigator.of(dialogContext).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      style: ButtonStyle(
+                        backgroundColor: const MaterialStatePropertyAll<Color>(
+                            Colors.redAccent),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        minimumSize: MaterialStateProperty.all<Size>(
+                            const Size(370, 65)),
+                      ),
+                      child: const Text(
+                        'බලපත්‍රය ඉවත් කරන්න',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
                   ],
                 ),
               ),
