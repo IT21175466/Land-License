@@ -328,7 +328,7 @@ class _SingleRecordState extends State<SingleRecord> {
                       child: const Text(
                         'බලපත්‍රය ඉවත් කරන්න',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 15,
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
                         ),

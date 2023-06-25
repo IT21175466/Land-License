@@ -69,10 +69,10 @@ class _HomePageState extends State<HomePage> {
                     leading: Icon(Icons.done),
                     title: Row(
                       children: [
+                        Spacer(),
                         Text(
                           "දැනට ඇති බලපත්‍ර සංඛ්‍යාව - ",
                           style: TextStyle(
-                            fontSize: 16,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -83,6 +83,7 @@ class _HomePageState extends State<HomePage> {
                             fontWeight: FontWeight.w500,
                           ),
                         ),
+                        Spacer(),
                       ],
                     ),
                   ),
@@ -122,7 +123,6 @@ class _HomePageState extends State<HomePage> {
                       title: Text(
                         "නව බලපත්‍රයක් එකතු කරන්න.",
                         style: TextStyle(
-                          fontSize: 18,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -158,7 +158,6 @@ class _HomePageState extends State<HomePage> {
                       title: Text(
                         "බලපත්‍රයක් සොයන්න.",
                         style: TextStyle(
-                          fontSize: 18,
                           fontWeight: FontWeight.w500,
                         ),
                       ),

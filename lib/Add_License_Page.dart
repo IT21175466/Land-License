@@ -182,7 +182,7 @@ class _AddLicenseState extends State<AddLicense> {
         title: const Text(
           "බලපත්‍රයක් එකතුකරන්න",
           style: TextStyle(
-            fontSize: 18,
+            fontSize: 15,
             fontWeight: FontWeight.w600,
             color: Colors.white,
           ),
@@ -467,7 +467,7 @@ class _AddLicenseState extends State<AddLicense> {
                         child: const Text(
                           'බලපත්‍රය එකතු කරන්න',
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 15,
                             color: Colors.white,
                             fontWeight: FontWeight.w500,
                           ),
