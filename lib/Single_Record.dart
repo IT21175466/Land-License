@@ -53,6 +53,14 @@ class _SingleRecordState extends State<SingleRecord> {
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
         centerTitle: true,
+        title: const Text(
+          "බලපත්‍ර විස්තර",
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -63,6 +71,9 @@ class _SingleRecordState extends State<SingleRecord> {
             children: [
               Text(
                 id!,
+                style: TextStyle(
+                  color: Colors.white,
+                ),
               ),
               Container(
                 padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
