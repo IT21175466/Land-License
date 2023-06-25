@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -38,7 +39,6 @@ class _SingleRecordState extends State<SingleRecord> {
 
     setState(() {
       licenseNumber = licenseDoc.get('License_Number');
-
       licenseName = licenseDoc.get('License_Name');
       licenseAddress = licenseDoc.get('License_Address');
       licenseWasama = licenseDoc.get('License_Wasama');
@@ -192,17 +192,19 @@ class _SingleRecordState extends State<SingleRecord> {
               SizedBox(
                 height: 10,
               ),
-              Image.network(
-                frontImageUrl!,
-                fit: BoxFit.cover,
-              ),
+              if (frontImageUrl != null)
+                Image.network(
+                  frontImageUrl!,
+                  fit: BoxFit.cover,
+                ),
               SizedBox(
                 height: 20,
               ),
-              Image.network(
-                backImageUrl!,
-                fit: BoxFit.cover,
-              ),
+              if (backImageUrl != null)
+                Image.network(
+                  backImageUrl!,
+                  fit: BoxFit.cover,
+                ),
               SizedBox(
                 height: 20,
               ),
