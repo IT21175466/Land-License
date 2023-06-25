@@ -111,29 +111,34 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(
                 height: 10,
               ),
-              Container(
-                width: double.infinity,
-                height: 100,
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 233, 230, 251),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: Colors.grey,
-                  ),
-                ),
-                child: const Align(
-                  alignment: Alignment.centerLeft,
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.search_rounded,
-                      color: Colors.blueAccent,
-                      size: 40,
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed('/searchLicense');
+                },
+                child: Container(
+                  width: double.infinity,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 233, 230, 251),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: Colors.grey,
                     ),
-                    title: Text(
-                      "බලපත්‍රයක් සොයන්න.",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
+                  ),
+                  child: const Align(
+                    alignment: Alignment.centerLeft,
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.search_rounded,
+                        color: Colors.blueAccent,
+                        size: 40,
+                      ),
+                      title: Text(
+                        "බලපත්‍රයක් සොයන්න.",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   ),

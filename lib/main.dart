@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:land_license/Add_License_Page.dart';
 import 'package:land_license/Home_Page.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:land_license/Search_License.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/addLicensePage': (_) => const AddLicense(),
         '/home': (_) => const HomePage(),
+        '/searchLicense': (_) => const SearchLicense(),
       },
     );
   }
