@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -30,6 +31,18 @@ class _SingleRecordState extends State<SingleRecord> {
     setState(() {
       getData(id!);
     });
+  }
+
+  void deleteData(String uId) async {
+    await FirebaseFirestore.instance
+        .collection('All_Land_Licenses')
+        .doc(uId)
+        .delete();
+  }
+
+  void deleteStorageFolder(String folderPath) async {
+    final storageReference = FirebaseStorage.instance.ref().child(folderPath);
+    await storageReference.delete();
   }
 
   void getData(String uId) async {
@@ -280,7 +293,13 @@ class _SingleRecordState extends State<SingleRecord> {
                                     ),
                                   ),
                                   onPressed: () {
+                                    print(id!);
+                                    deleteData(id!);
+                                    deleteStorageFolder('images/$id');
                                     Navigator.of(dialogContext).pop();
+                                    Navigator.of(context)
+                                        .pushNamedAndRemoveUntil(
+                                            '/home', (route) => false);
                                   },
                                 ),
                                 TextButton(
