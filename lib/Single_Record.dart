@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class SingleRecord extends StatefulWidget {
   String? id;
   SingleRecord({this.id});
@@ -13,7 +13,6 @@ class SingleRecord extends StatefulWidget {
 class _SingleRecordState extends State<SingleRecord> {
   String? id;
   _SingleRecordState(this.id);
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   String? licenseNumber;
   String? licenseName;
