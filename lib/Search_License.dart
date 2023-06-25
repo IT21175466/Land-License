@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:land_license/Single_Record.dart';
 
 class SearchLicense extends StatefulWidget {
   const SearchLicense({super.key});
@@ -92,6 +93,13 @@ class _SearchLicenseState extends State<SearchLicense> {
                                 selectedIndex =
                                     docs[index]['Doc_ID'].toString();
                                 print(selectedIndex);
+
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        SingleRecord(id: selectedIndex),
+                                  ),
+                                );
                               });
                             },
                             child: ListTile(

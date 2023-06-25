@@ -3,6 +3,7 @@ import 'package:land_license/Add_License_Page.dart';
 import 'package:land_license/Home_Page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:land_license/Search_License.dart';
+import 'package:land_license/Single_Record.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
