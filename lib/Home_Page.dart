@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -8,6 +9,27 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int documentCount = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getDocumentCount();
+  }
+
+  void getDocumentCount() {
+    FirebaseFirestore.instance
+        .collection('All_Land_Licenses')
+        .snapshots()
+        .listen((QuerySnapshot snapshot) {
+      setState(() {
+        documentCount = snapshot.docs.length;
+        print(documentCount);
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +63,7 @@ class _HomePageState extends State<HomePage> {
                   color: const Color.fromARGB(255, 233, 230, 251),
                   borderRadius: BorderRadius.circular(5),
                 ),
-                child: const Align(
+                child: Align(
                   alignment: Alignment.center,
                   child: ListTile(
                     leading: Icon(Icons.done),
@@ -55,7 +77,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         Text(
-                          "80",
+                          '$documentCount',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,

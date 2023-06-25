@@ -55,14 +55,15 @@ class _SearchLicenseState extends State<SearchLicense> {
                 child: TextField(
                   controller: _search,
                   decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(0),
-                      prefixIcon: Icon(Icons.search),
-                      prefixIconConstraints: BoxConstraints(
-                        maxHeight: 20,
-                        minWidth: 25,
-                      ),
-                      border: InputBorder.none,
-                      hintText: 'සොයන්න'),
+                    contentPadding: EdgeInsets.all(0),
+                    prefixIcon: Icon(Icons.search),
+                    prefixIconConstraints: BoxConstraints(
+                      maxHeight: 20,
+                      minWidth: 25,
+                    ),
+                    border: InputBorder.none,
+                    hintText: 'සොයන්න',
+                  ),
                   onChanged: (value) {
                     print(value);
                     setState(() {
