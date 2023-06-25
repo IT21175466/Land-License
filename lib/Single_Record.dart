@@ -11,6 +11,8 @@ class SingleRecord extends StatefulWidget {
 }
 
 class _SingleRecordState extends State<SingleRecord> {
+  bool loading = false;
+  bool imageLoading = false;
   String? id;
   _SingleRecordState(this.id);
 
@@ -31,6 +33,9 @@ class _SingleRecordState extends State<SingleRecord> {
   }
 
   void getData(String uId) async {
+    setState(() {
+      loading = true;
+    });
     final DocumentSnapshot licenseDoc = await FirebaseFirestore.instance
         .collection("All_Land_Licenses")
         .doc(uId)
@@ -43,6 +48,9 @@ class _SingleRecordState extends State<SingleRecord> {
       licenseWasama = licenseDoc.get('License_Wasama');
       frontImageUrl = licenseDoc.get('front_img_url');
       backImageUrl = licenseDoc.get('back_image_url');
+    });
+    setState(() {
+      loading = false;
     });
   }
 
@@ -61,156 +69,203 @@ class _SingleRecordState extends State<SingleRecord> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-          ),
-          child: Column(
-            children: [
-              Text(
-                id!,
-                style: TextStyle(
-                  color: Colors.white,
+      body: loading
+          ? const AlertDialog(
+              title: Text("මඳක් රැඳී සිටින්න..."),
+              content: SizedBox(
+                height: 100,
+                width: 100,
+                child: Center(
+                  child: Column(
+                    children: [
+                      Text("දත්ත ලබාගනිමින් පවතී."),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      CircularProgressIndicator(
+                        color: Colors.blueAccent,
+                        backgroundColor: Colors.grey,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                margin: EdgeInsets.symmetric(vertical: 5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: const Color.fromARGB(100, 277, 239, 251),
+              actions: <Widget>[],
+            )
+          : SingleChildScrollView(
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
                 ),
-                child: Center(
-                  child: ListTile(
-                    title: Text(
-                      'බලපත්‍ර අංකය :',
+                child: Column(
+                  children: [
+                    Text(
+                      id!,
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                      margin: EdgeInsets.symmetric(vertical: 5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: const Color.fromARGB(100, 277, 239, 251),
+                      ),
+                      child: Center(
+                        child: ListTile(
+                          title: Text(
+                            'බලපත්‍ර අංකය :',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          subtitle: Text(
+                            '$licenseNumber',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                      margin: EdgeInsets.symmetric(vertical: 5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: const Color.fromARGB(100, 277, 239, 251),
+                      ),
+                      child: Center(
+                        child: ListTile(
+                          title: Text(
+                            'බලපත්‍ර හිමියාගේ නම :',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          subtitle: Text(
+                            '$licenseName',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                      margin: EdgeInsets.symmetric(vertical: 5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: const Color.fromARGB(100, 277, 239, 251),
+                      ),
+                      child: Center(
+                        child: ListTile(
+                          title: Text(
+                            'බලපත්‍ර හිමියාගේ ලිපිනය :',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          subtitle: Text(
+                            '$licenseAddress',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                      margin: EdgeInsets.symmetric(vertical: 5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: const Color.fromARGB(100, 277, 239, 251),
+                      ),
+                      child: Center(
+                        child: ListTile(
+                          title: Text(
+                            'වසම :',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          subtitle: Text(
+                            '$licenseWasama',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'බලපත්‍රයේ චායාරූප',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    subtitle: Text(
-                      '$licenseNumber',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    SizedBox(
+                      height: 10,
                     ),
-                  ),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                margin: EdgeInsets.symmetric(vertical: 5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: const Color.fromARGB(100, 277, 239, 251),
-                ),
-                child: Center(
-                  child: ListTile(
-                    title: Text(
-                      'බලපත්‍ර හිමියාගේ නම :',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
+                    if (frontImageUrl != null)
+                      Image.network(
+                        frontImageUrl!,
+                        fit: BoxFit.cover,
+                        loadingBuilder: (BuildContext context, Widget child,
+                            ImageChunkEvent? loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes!
+                                  : null,
+                            ),
+                          );
+                        },
                       ),
+                    SizedBox(
+                      height: 20,
                     ),
-                    subtitle: Text(
-                      '$licenseName',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
+                    if (backImageUrl != null)
+                      Image.network(
+                        backImageUrl!,
+                        fit: BoxFit.cover,
+                        loadingBuilder: (BuildContext context, Widget child,
+                            ImageChunkEvent? loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes!
+                                  : null,
+                            ),
+                          );
+                        },
                       ),
+                    SizedBox(
+                      height: 20,
                     ),
-                  ),
+                  ],
                 ),
               ),
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                margin: EdgeInsets.symmetric(vertical: 5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: const Color.fromARGB(100, 277, 239, 251),
-                ),
-                child: Center(
-                  child: ListTile(
-                    title: Text(
-                      'බලපත්‍ර හිමියාගේ ලිපිනය :',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    subtitle: Text(
-                      '$licenseAddress',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                margin: EdgeInsets.symmetric(vertical: 5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: const Color.fromARGB(100, 277, 239, 251),
-                ),
-                child: Center(
-                  child: ListTile(
-                    title: Text(
-                      'වසම :',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    subtitle: Text(
-                      '$licenseWasama',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                'බලපත්‍රයේ චායාරූප',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              if (frontImageUrl != null)
-                Image.network(
-                  frontImageUrl!,
-                  fit: BoxFit.cover,
-                ),
-              SizedBox(
-                height: 20,
-              ),
-              if (backImageUrl != null)
-                Image.network(
-                  backImageUrl!,
-                  fit: BoxFit.cover,
-                ),
-              SizedBox(
-                height: 20,
-              ),
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 }

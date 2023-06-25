@@ -15,6 +15,9 @@ class _SearchLicenseState extends State<SearchLicense> {
 
   String selectedIndex = '';
 
+  TextEditingController _search = TextEditingController();
+  String search = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,8 +51,9 @@ class _SearchLicenseState extends State<SearchLicense> {
                 borderRadius: BorderRadius.circular(30.0),
                 border: Border.all(),
               ),
-              child: const Center(
+              child: Center(
                 child: TextField(
+                  controller: _search,
                   decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(0),
                       prefixIcon: Icon(Icons.search),
@@ -59,6 +63,12 @@ class _SearchLicenseState extends State<SearchLicense> {
                       ),
                       border: InputBorder.none,
                       hintText: 'සොයන්න'),
+                  onChanged: (value) {
+                    print(value);
+                    setState(() {
+                      search = value.toString();
+                    });
+                  },
                 ),
               ),
             ),
@@ -78,48 +88,143 @@ class _SearchLicenseState extends State<SearchLicense> {
                   return ListView.builder(
                     itemCount: docs.length,
                     itemBuilder: (context, index) {
-                      return Container(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                        margin: EdgeInsets.symmetric(vertical: 5),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: const Color.fromARGB(100, 277, 239, 251),
-                        ),
-                        child: Center(
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                selectedIndex =
-                                    docs[index]['Doc_ID'].toString();
-                                print(selectedIndex);
+                      if (_search.text.toString().isEmpty) {
+                        return Container(
+                          padding:
+                              EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                          margin: EdgeInsets.symmetric(vertical: 5),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: const Color.fromARGB(100, 277, 239, 251),
+                          ),
+                          child: Center(
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  selectedIndex =
+                                      docs[index]['Doc_ID'].toString();
+                                  print(selectedIndex);
 
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        SingleRecord(id: selectedIndex),
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          SingleRecord(id: selectedIndex),
+                                    ),
+                                  );
+                                });
+                              },
+                              child: ListTile(
+                                title: Text(
+                                  docs[index]['License_Number'],
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
                                   ),
-                                );
-                              });
-                            },
-                            child: ListTile(
-                              title: Text(docs[index]['License_Number']),
-                              subtitle: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Column(
-                                  children: [
-                                    Text(docs[index]['Doc_ID'] +
-                                        '\n' +
-                                        docs[index]['License_Name'] +
-                                        '\n' +
-                                        docs[index]['License_Wasama']),
-                                  ],
+                                ),
+                                subtitle: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        docs[index]['Doc_ID'],
+                                        style: TextStyle(
+                                          color: const Color.fromARGB(
+                                              0, 277, 239, 251),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          docs[index]['License_Name'] +
+                                              '\n' +
+                                              docs[index]['License_Wasama'],
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      );
+                        );
+                      } else if (docs[index]['License_Number']
+                              .toLowerCase()
+                              .contains(_search.text.toString()) ||
+                          docs[index]['License_Name']
+                              .toLowerCase()
+                              .contains(_search.text.toString()) ||
+                          docs[index]['License_Wasama']
+                              .toLowerCase()
+                              .contains(_search.text.toString())) {
+                        return Container(
+                          padding:
+                              EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                          margin: EdgeInsets.symmetric(vertical: 5),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: const Color.fromARGB(100, 277, 239, 251),
+                          ),
+                          child: Center(
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  selectedIndex =
+                                      docs[index]['Doc_ID'].toString();
+                                  print(selectedIndex);
+
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          SingleRecord(id: selectedIndex),
+                                    ),
+                                  );
+                                });
+                              },
+                              child: ListTile(
+                                title: Text(
+                                  docs[index]['License_Number'],
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                subtitle: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        docs[index]['Doc_ID'],
+                                        style: TextStyle(
+                                          color: const Color.fromARGB(
+                                              0, 277, 239, 251),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          docs[index]['License_Name'] +
+                                              '\n' +
+                                              docs[index]['License_Wasama'],
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      } else {
+                        return Container();
+                      }
                     },
                   );
                 },
