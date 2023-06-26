@@ -57,7 +57,6 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             children: [
               Container(
-                width: double.infinity,
                 height: 60,
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(255, 233, 230, 251),
