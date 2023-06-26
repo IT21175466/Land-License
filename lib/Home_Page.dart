@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -36,28 +37,28 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         leading: const Icon(
           Icons.menu,
-          color: Colors.white,
+          color: Color.fromRGBO(255, 255, 255, 1),
         ),
         backgroundColor: Colors.blueAccent,
-        title: const Text(
-          "Land License Management System",
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w500,
-            color: Colors.white,
+        title: FittedBox(
+          child: Text(
+            "Land License Management System",
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
           ),
         ),
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: const EdgeInsets.symmetric(
-            vertical: 10,
-            horizontal: 10,
+          padding: EdgeInsets.symmetric(
+            vertical: 10.h,
+            horizontal: 10.w,
           ),
           child: Column(
             children: [
               Container(
-                height: 60,
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(255, 233, 230, 251),
                   borderRadius: BorderRadius.circular(5),
@@ -65,21 +66,29 @@ class _HomePageState extends State<HomePage> {
                 child: Align(
                   alignment: Alignment.center,
                   child: ListTile(
-                    leading: Icon(Icons.done),
+                    leading: Icon(
+                      Icons.done,
+                      size: 15.h,
+                    ),
                     title: Row(
                       children: [
                         Spacer(),
-                        Text(
-                          "දැනට ඇති බලපත්‍ර සංඛ්‍යාව - ",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
+                        FittedBox(
+                          child: Text(
+                            "දැනට ඇති බලපත්‍ර සංඛ්‍යාව - ",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: ScreenUtil().setSp(12),
+                            ),
                           ),
                         ),
-                        Text(
-                          '$documentCount',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
+                        FittedBox(
+                          child: Text(
+                            '$documentCount',
+                            style: TextStyle(
+                              fontSize: ScreenUtil().setSp(12),
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
                         Spacer(),
@@ -94,8 +103,8 @@ class _HomePageState extends State<HomePage> {
                   child: Image.asset('lib/images/document.png'),
                 ),
               ),
-              const SizedBox(
-                height: 25,
+              SizedBox(
+                height: 25.h,
               ),
               GestureDetector(
                 onTap: () {
@@ -103,7 +112,7 @@ class _HomePageState extends State<HomePage> {
                 },
                 child: Container(
                   width: double.infinity,
-                  height: 100,
+                  height: 80.h,
                   decoration: BoxDecoration(
                     color: const Color.fromARGB(255, 233, 230, 251),
                     borderRadius: BorderRadius.circular(20),
@@ -111,18 +120,19 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.grey,
                     ),
                   ),
-                  child: const Align(
+                  child: Align(
                     alignment: Alignment.centerLeft,
                     child: ListTile(
                       leading: Icon(
                         Icons.add_circle_rounded,
                         color: Colors.blueAccent,
-                        size: 40,
+                        size: 25.h,
                       ),
                       title: Text(
                         "නව බලපත්‍රයක් එකතු කරන්න.",
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
+                          fontSize: ScreenUtil().setSp(13),
                         ),
                       ),
                     ),
@@ -138,7 +148,7 @@ class _HomePageState extends State<HomePage> {
                 },
                 child: Container(
                   width: double.infinity,
-                  height: 100,
+                  height: 80.h,
                   decoration: BoxDecoration(
                     color: const Color.fromARGB(255, 233, 230, 251),
                     borderRadius: BorderRadius.circular(20),
@@ -146,18 +156,19 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.grey,
                     ),
                   ),
-                  child: const Align(
+                  child: Align(
                     alignment: Alignment.centerLeft,
                     child: ListTile(
                       leading: Icon(
                         Icons.search_rounded,
                         color: Colors.blueAccent,
-                        size: 40,
+                        size: 25.h,
                       ),
                       title: Text(
                         "බලපත්‍රයක් සොයන්න.",
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
+                          fontSize: ScreenUtil().setSp(13),
                         ),
                       ),
                     ),
