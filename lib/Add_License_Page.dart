@@ -176,311 +176,309 @@ class _AddLicenseState extends State<AddLicense> {
   Widget build(BuildContext context) {
     pd = ProgressDialog(context: context);
 
-    return SingleChildScrollView(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.blueAccent,
-          centerTitle: true,
-          title: const Text(
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blueAccent,
+        centerTitle: true,
+        title: FittedBox(
+          child: Text(
             "බලපත්‍රයක් එකතුකරන්න",
             style: TextStyle(
-              fontSize: 15,
               fontWeight: FontWeight.w600,
               color: Colors.white,
             ),
           ),
         ),
-        body: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.symmetric(
-              vertical: 20,
-              horizontal: 10,
-            ),
-            child: loading
-                ? const AlertDialog(
-                    title: Text("මඳක් රැඳී සිටින්න..."),
-                    content: SizedBox(
-                      height: 100,
-                      width: 100,
-                      child: Center(
-                        child: Column(
-                          children: [
-                            Text("දත්ත ඇතුලත් වෙමින් පවතී..."),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            CircularProgressIndicator(
-                              color: Colors.blueAccent,
-                              backgroundColor: Colors.grey,
-                            ),
-                          ],
-                        ),
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          color: Colors.white,
+          padding: EdgeInsets.symmetric(
+            vertical: 20.h,
+            horizontal: 10.h,
+          ),
+          child: loading
+              ? AlertDialog(
+                  title: Text("මඳක් රැඳී සිටින්න..."),
+                  content: SizedBox(
+                    height: 100.h,
+                    width: 100.h,
+                    child: Center(
+                      child: Column(
+                        children: [
+                          Text("දත්ත ඇතුලත් වෙමින් පවතී..."),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          CircularProgressIndicator(
+                            color: Colors.blueAccent,
+                            backgroundColor: Colors.grey,
+                          ),
+                        ],
                       ),
                     ),
-                    actions: <Widget>[],
-                  )
-                : SizedBox(
-                    child: Column(
-                      children: [
-                        TextField(
-                          controller: _LicenseNumberController,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            labelText: 'බලපත්‍ර අංකය',
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        TextField(
-                          controller: _LicenseNameController,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            labelText: 'හිමිකරුගේ නම',
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        TextField(
-                          controller: _LicenseAddressController,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            labelText: 'ලිපිනය',
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        TextField(
-                          controller: _LicenseWasamaController,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            labelText: 'ග්‍රාම නිලධාරී වසම',
-                          ),
-                        ),
-                        const SizedBox(height: 40),
-                        const Text(
-                          "බලපත්‍රයේ චායාරූප එකතු කරන්න.",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        Row(
-                          children: [
-                            const Spacer(),
-                            GestureDetector(
-                              onTap: () {
-                                getFrontImage();
-                              },
-                              child: Container(
-                                width: 146,
-                                height: 112,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(13),
-                                  color:
-                                      const Color.fromARGB(50, 277, 277, 277),
-                                  image: frontImage != null
-                                      ? DecorationImage(
-                                          image: FileImage(frontImage!),
-                                          fit: BoxFit.cover,
-                                        )
-                                      : null,
-                                ),
-                                child: const Column(
-                                  children: [
-                                    Spacer(),
-                                    Icon(
-                                      Icons.document_scanner,
-                                      size: 40,
-                                      color: Colors.black54,
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      "ඉදිරිපස",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    Spacer(),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            const Spacer(),
-                            GestureDetector(
-                              onTap: () {
-                                getBackImage();
-                              },
-                              child: Container(
-                                width: 146,
-                                height: 112,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(13),
-                                  color:
-                                      const Color.fromARGB(50, 277, 277, 277),
-                                  image: backImage != null
-                                      ? DecorationImage(
-                                          image: FileImage(backImage!),
-                                          fit: BoxFit.cover,
-                                        )
-                                      : null,
-                                ),
-                                child: const Column(
-                                  children: [
-                                    Spacer(),
-                                    Icon(
-                                      Icons.document_scanner,
-                                      size: 40,
-                                      color: Colors.black54,
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      "පිටුපස",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    Spacer(),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            const Spacer(),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 50,
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            String lNumber = _LicenseNumberController.text;
-                            String lName = _LicenseNameController.text;
-                            String lAddress = _LicenseAddressController.text;
-                            String lWasama = _LicenseWasamaController.text;
-
-                            if (lNumber.isEmpty ||
-                                lName.isEmpty ||
-                                lAddress.isEmpty ||
-                                lWasama.isEmpty) {
-                              emptyFileds();
-                            } else if (frontImage == null) {
-                              emptyImages();
-                            } else if (backImage == null) {
-                              emptyImages();
-                            } else {
-                              print("Done");
-
-                              setState(() {
-                                loading = true;
-                              });
-
-                              FirebaseFirestore.instance
-                                  .collection('All_Land_Licenses')
-                                  .doc('$docID')
-                                  .set({
-                                'Doc_ID': docID,
-                                'License_Number': lNumber,
-                                'License_Name': lName,
-                                'License_Address': lAddress,
-                                'License_Wasama': lWasama,
-                                'front_img_url': frontImageUrl,
-                                'back_image_url': backImageUrl,
-                              }).then((value) {
-                                setState(() {
-                                  loading = false;
-                                  Future.delayed(Duration(seconds: 2), () {});
-                                });
-
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext dialogContext) {
-                                    return AlertDialog(
-                                      title: const Text("සාර්ථකයි..!"),
-                                      content: const Text(
-                                        "තොරතුරු සාර්ථකව ඇතුලත් වී ඇත.",
-                                      ),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          child: const Text("හරි"),
-                                          onPressed: () {
-                                            Navigator.of(context)
-                                                .pushNamedAndRemoveUntil(
-                                                    '/home', (route) => false);
-                                          },
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                                print("Data added successfully");
-                              }).catchError((error) {
-                                setState(() {
-                                  loading = false;
-                                });
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext dialogContext) {
-                                    return AlertDialog(
-                                      title: Text("අසාර්ථකයි..!"),
-                                      content:
-                                          Text("දෝශයකි..! නැවත උත්සාහ කරන්න."),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          child: Text("හරි"),
-                                          onPressed: () {
-                                            Navigator.of(dialogContext).pop();
-                                          },
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                                print("Error adding data: $error");
-                              });
-                            }
-                          },
-                          style: ButtonStyle(
-                            backgroundColor:
-                                const MaterialStatePropertyAll<Color>(
-                                    Colors.blueAccent),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                            ),
-                            minimumSize: MaterialStateProperty.all<Size>(
-                                const Size(370, 65)),
-                          ),
-                          child: const Text(
-                            'බලපත්‍රය එකතු කරන්න',
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
                   ),
-          ),
+                  actions: <Widget>[],
+                )
+              : SizedBox(
+                  child: Column(
+                    children: [
+                      TextField(
+                        controller: _LicenseNumberController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          labelText: 'බලපත්‍ර අංකය',
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15.h,
+                      ),
+                      TextField(
+                        controller: _LicenseNameController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          labelText: 'හිමිකරුගේ නම',
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15.h,
+                      ),
+                      TextField(
+                        controller: _LicenseAddressController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          labelText: 'ලිපිනය',
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15.h,
+                      ),
+                      TextField(
+                        controller: _LicenseWasamaController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          labelText: 'ග්‍රාම නිලධාරී වසම',
+                        ),
+                      ),
+                      SizedBox(height: 30.h),
+                      Text(
+                        "බලපත්‍රයේ චායාරූප එකතු කරන්න.",
+                        style: TextStyle(
+                          fontSize: 13.h,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                        ),
+                      ),
+                      SizedBox(height: 20.h),
+                      Row(
+                        children: [
+                          const Spacer(),
+                          GestureDetector(
+                            onTap: () {
+                              getFrontImage();
+                            },
+                            child: Container(
+                              width: 146.w,
+                              height: 112.h,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(13),
+                                color: const Color.fromARGB(50, 277, 277, 277),
+                                image: frontImage != null
+                                    ? DecorationImage(
+                                        image: FileImage(frontImage!),
+                                        fit: BoxFit.cover,
+                                      )
+                                    : null,
+                              ),
+                              child: Column(
+                                children: [
+                                  Spacer(),
+                                  Icon(
+                                    Icons.document_scanner,
+                                    size: 40.h,
+                                    color: Colors.black54,
+                                  ),
+                                  SizedBox(
+                                    height: 10.h,
+                                  ),
+                                  Text(
+                                    "ඉදිරිපස",
+                                    style: TextStyle(
+                                        fontSize: 15.h,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  Spacer(),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const Spacer(),
+                          GestureDetector(
+                            onTap: () {
+                              getBackImage();
+                            },
+                            child: Container(
+                              width: 146.w,
+                              height: 112.h,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(13),
+                                color: const Color.fromARGB(50, 277, 277, 277),
+                                image: backImage != null
+                                    ? DecorationImage(
+                                        image: FileImage(backImage!),
+                                        fit: BoxFit.cover,
+                                      )
+                                    : null,
+                              ),
+                              child: Column(
+                                children: [
+                                  Spacer(),
+                                  Icon(
+                                    Icons.document_scanner,
+                                    size: 40.h,
+                                    color: Colors.black54,
+                                  ),
+                                  SizedBox(
+                                    height: 10.h,
+                                  ),
+                                  Text(
+                                    "පිටුපස",
+                                    style: TextStyle(
+                                        fontSize: 15.h,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  Spacer(),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const Spacer(),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 30.h,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          String lNumber = _LicenseNumberController.text;
+                          String lName = _LicenseNameController.text;
+                          String lAddress = _LicenseAddressController.text;
+                          String lWasama = _LicenseWasamaController.text;
+
+                          if (lNumber.isEmpty ||
+                              lName.isEmpty ||
+                              lAddress.isEmpty ||
+                              lWasama.isEmpty) {
+                            emptyFileds();
+                          } else if (frontImage == null) {
+                            emptyImages();
+                          } else if (backImage == null) {
+                            emptyImages();
+                          } else {
+                            print("Done");
+
+                            setState(() {
+                              loading = true;
+                            });
+
+                            FirebaseFirestore.instance
+                                .collection('All_Land_Licenses')
+                                .doc('$docID')
+                                .set({
+                              'Doc_ID': docID,
+                              'License_Number': lNumber,
+                              'License_Name': lName,
+                              'License_Address': lAddress,
+                              'License_Wasama': lWasama,
+                              'front_img_url': frontImageUrl,
+                              'back_image_url': backImageUrl,
+                            }).then((value) {
+                              setState(() {
+                                loading = false;
+                                Future.delayed(Duration(seconds: 2), () {});
+                              });
+
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext dialogContext) {
+                                  return AlertDialog(
+                                    title: const Text("සාර්ථකයි..!"),
+                                    content: const Text(
+                                      "තොරතුරු සාර්ථකව ඇතුලත් වී ඇත.",
+                                    ),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: const Text("හරි"),
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .pushNamedAndRemoveUntil(
+                                                  '/home', (route) => false);
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                              print("Data added successfully");
+                            }).catchError((error) {
+                              setState(() {
+                                loading = false;
+                              });
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext dialogContext) {
+                                  return AlertDialog(
+                                    title: Text("අසාර්ථකයි..!"),
+                                    content:
+                                        Text("දෝශයකි..! නැවත උත්සාහ කරන්න."),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: Text("හරි"),
+                                        onPressed: () {
+                                          Navigator.of(dialogContext).pop();
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                              print("Error adding data: $error");
+                            });
+                          }
+                        },
+                        style: ButtonStyle(
+                          backgroundColor:
+                              const MaterialStatePropertyAll<Color>(
+                                  Colors.blueAccent),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.h),
+                            ),
+                          ),
+                          minimumSize: MaterialStateProperty.all<Size>(
+                              Size(370.w, 55.h)),
+                        ),
+                        child: Text(
+                          'බලපත්‍රය එකතු කරන්න',
+                          style: TextStyle(
+                            fontSize: 15.h,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
         ),
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // ignore: must_be_immutable
 class SingleRecord extends StatefulWidget {
@@ -73,27 +74,28 @@ class _SingleRecordState extends State<SingleRecord> {
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
         centerTitle: true,
-        title: const Text(
-          "බලපත්‍ර විස්තර",
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-            color: Colors.white,
+        title: FittedBox(
+          child: Text(
+            "බලපත්‍ර විස්තර",
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+            ),
           ),
         ),
       ),
       body: loading
-          ? const AlertDialog(
+          ? AlertDialog(
               title: Text("මඳක් රැඳී සිටින්න..."),
               content: SizedBox(
-                height: 100,
-                width: 100,
+                height: 100.h,
+                width: 100.h,
                 child: Center(
                   child: Column(
                     children: [
                       Text("දත්ත ලබාගනිමින් පවතී."),
                       SizedBox(
-                        height: 20,
+                        height: 20.h,
                       ),
                       CircularProgressIndicator(
                         color: Colors.blueAccent,
@@ -107,8 +109,8 @@ class _SingleRecordState extends State<SingleRecord> {
             )
           : SingleChildScrollView(
               child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
+                padding: EdgeInsets.symmetric(
+                  horizontal: 10.w,
                 ),
                 child: Column(
                   children: [
@@ -130,14 +132,14 @@ class _SingleRecordState extends State<SingleRecord> {
                           title: Text(
                             'බලපත්‍ර අංකය :',
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 18.h,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
                           subtitle: Text(
                             '$licenseNumber',
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 20.h,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -156,14 +158,14 @@ class _SingleRecordState extends State<SingleRecord> {
                           title: Text(
                             'බලපත්‍ර හිමියාගේ නම :',
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 18.h,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
                           subtitle: Text(
                             '$licenseName',
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 20.h,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -182,14 +184,14 @@ class _SingleRecordState extends State<SingleRecord> {
                           title: Text(
                             'බලපත්‍ර හිමියාගේ ලිපිනය :',
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 18.h,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
                           subtitle: Text(
                             '$licenseAddress',
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 20.h,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -208,14 +210,14 @@ class _SingleRecordState extends State<SingleRecord> {
                           title: Text(
                             'වසම :',
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 18.h,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
                           subtitle: Text(
                             '$licenseWasama',
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 20.h,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -223,17 +225,17 @@ class _SingleRecordState extends State<SingleRecord> {
                       ),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 10.h,
                     ),
                     Text(
                       'බලපත්‍රයේ චායාරූප',
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 18.h,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 10.h,
                     ),
                     if (frontImageUrl != null)
                       Image.network(
@@ -253,7 +255,7 @@ class _SingleRecordState extends State<SingleRecord> {
                         },
                       ),
                     SizedBox(
-                      height: 20,
+                      height: 20.h,
                     ),
                     if (backImageUrl != null)
                       Image.network(
@@ -273,7 +275,7 @@ class _SingleRecordState extends State<SingleRecord> {
                         },
                       ),
                     SizedBox(
-                      height: 20,
+                      height: 20.h,
                     ),
                     ElevatedButton(
                       onPressed: () {
@@ -319,23 +321,23 @@ class _SingleRecordState extends State<SingleRecord> {
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
+                            borderRadius: BorderRadius.circular(30.h),
                           ),
                         ),
-                        minimumSize: MaterialStateProperty.all<Size>(
-                            const Size(370, 65)),
+                        minimumSize:
+                            MaterialStateProperty.all<Size>(Size(370.w, 65.h)),
                       ),
-                      child: const Text(
+                      child: Text(
                         'බලපත්‍රය ඉවත් කරන්න',
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: 15.h,
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 20.h,
                     ),
                   ],
                 ),

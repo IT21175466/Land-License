@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:land_license/Single_Record.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SearchLicense extends StatefulWidget {
   const SearchLicense({super.key});
@@ -24,46 +25,52 @@ class _SearchLicenseState extends State<SearchLicense> {
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
         centerTitle: true,
-        title: const Text(
-          "බලපත්‍රයක් සොයන්න",
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-            color: Colors.white,
+        title: FittedBox(
+          child: Text(
+            "බලපත්‍රයක් සොයන්න",
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+            ),
           ),
         ),
       ),
       body: Container(
-        padding: const EdgeInsets.symmetric(
-          vertical: 20,
-          horizontal: 10,
+        padding: EdgeInsets.symmetric(
+          vertical: 20.h,
+          horizontal: 10.w,
         ),
         child: Column(
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 15,
+              padding: EdgeInsets.symmetric(
+                horizontal: 15.h,
               ),
               width: double.infinity,
-              height: 60,
+              height: 50.h,
               decoration: BoxDecoration(
                 color: const Color.fromARGB(100, 277, 239, 251),
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(30.0.h),
                 border: Border.all(),
               ),
               child: Center(
                 child: TextField(
                   controller: _search,
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(0),
-                    prefixIcon: Icon(Icons.search),
-                    prefixIconConstraints: BoxConstraints(
-                      maxHeight: 20,
-                      minWidth: 25,
-                    ),
-                    border: InputBorder.none,
-                    hintText: 'සොයන්න',
-                  ),
+                      contentPadding: EdgeInsets.all(0),
+                      prefixIcon: Icon(
+                        Icons.search,
+                        size: 17.h,
+                      ),
+                      prefixIconConstraints: BoxConstraints(
+                        maxHeight: 20.h,
+                        minWidth: 25.h,
+                      ),
+                      border: InputBorder.none,
+                      hintText: 'සොයන්න',
+                      hintStyle: TextStyle(
+                        fontSize: 15.h,
+                      )),
                   onChanged: (value) {
                     print(value);
                     setState(() {
@@ -73,7 +80,7 @@ class _SearchLicenseState extends State<SearchLicense> {
                 ),
               ),
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 30.h),
             Expanded(
               child: StreamBuilder(
                 stream: _landLicences,
@@ -118,7 +125,7 @@ class _SearchLicenseState extends State<SearchLicense> {
                                 title: Text(
                                   docs[index]['License_Number'],
                                   style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 20.h,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -140,7 +147,7 @@ class _SearchLicenseState extends State<SearchLicense> {
                                               '\n' +
                                               docs[index]['License_Wasama'],
                                           style: TextStyle(
-                                            fontSize: 18,
+                                            fontSize: 18.h,
                                             fontWeight: FontWeight.w400,
                                           ),
                                         ),
@@ -166,7 +173,7 @@ class _SearchLicenseState extends State<SearchLicense> {
                               EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                           margin: EdgeInsets.symmetric(vertical: 5),
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(20.h),
                             color: const Color.fromARGB(100, 277, 239, 251),
                           ),
                           child: Center(
@@ -189,7 +196,7 @@ class _SearchLicenseState extends State<SearchLicense> {
                                 title: Text(
                                   docs[index]['License_Number'],
                                   style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 20.h,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -211,7 +218,7 @@ class _SearchLicenseState extends State<SearchLicense> {
                                               '\n' +
                                               docs[index]['License_Wasama'],
                                           style: TextStyle(
-                                            fontSize: 18,
+                                            fontSize: 18.h,
                                             fontWeight: FontWeight.w400,
                                           ),
                                         ),
