@@ -28,8 +28,8 @@ class _HomePageState extends State<HomePage> {
     AlertDialog(
       title: Text("දෝශයකි! "),
       content: SizedBox(
-        height: 100,
-        width: 100,
+        height: 100.h,
+        width: 100.w,
         child: Center(
           child: Column(
             children: [
@@ -105,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                             "දැනට ඇති බලපත්‍ර සංඛ්‍යාව - ",
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
-                              fontSize: ScreenUtil().setSp(12),
+                              fontSize: ScreenUtil().setSp(14),
                             ),
                           ),
                         ),
@@ -113,7 +113,7 @@ class _HomePageState extends State<HomePage> {
                           child: Text(
                             '$documentCount',
                             style: TextStyle(
-                              fontSize: ScreenUtil().setSp(12),
+                              fontSize: ScreenUtil().setSp(14),
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -159,7 +159,7 @@ class _HomePageState extends State<HomePage> {
                         "නව බලපත්‍රයක් එකතු කරන්න.",
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
-                          fontSize: ScreenUtil().setSp(13),
+                          fontSize: ScreenUtil().setSp(14),
                         ),
                       ),
                     ),
@@ -195,7 +195,7 @@ class _HomePageState extends State<HomePage> {
                         "බලපත්‍රයක් සොයන්න.",
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
-                          fontSize: ScreenUtil().setSp(13),
+                          fontSize: ScreenUtil().setSp(14),
                         ),
                       ),
                     ),

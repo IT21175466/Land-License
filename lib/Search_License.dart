@@ -42,6 +42,7 @@ class _SearchLicenseState extends State<SearchLicense> {
           ),
         ),
         body: Container(
+          color: Color(0XFFEEEFF5),
           padding: EdgeInsets.symmetric(
             vertical: 20.h,
             horizontal: 10.w,
@@ -55,9 +56,11 @@ class _SearchLicenseState extends State<SearchLicense> {
                 width: double.infinity,
                 height: 50.h,
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(100, 277, 239, 251),
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(30.0.h),
-                  border: Border.all(),
+                  border: Border.all(
+                    color: Colors.grey,
+                  ),
                 ),
                 child: Center(
                   child: TextField(
@@ -86,7 +89,15 @@ class _SearchLicenseState extends State<SearchLicense> {
                   ),
                 ),
               ),
-              SizedBox(height: 30.h),
+              SizedBox(height: 10.h),
+              Text(
+                'බලපත්‍ර ලයිස්තුව',
+                style: TextStyle(
+                  fontSize: 18.h,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              SizedBox(height: 5.h),
               Expanded(
                 child: StreamBuilder(
                   stream: _landLicences,
@@ -109,7 +120,7 @@ class _SearchLicenseState extends State<SearchLicense> {
                             margin: EdgeInsets.symmetric(vertical: 5),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
-                              color: const Color.fromARGB(100, 277, 239, 251),
+                              color: Colors.white,
                             ),
                             child: Center(
                               child: GestureDetector(
@@ -131,7 +142,7 @@ class _SearchLicenseState extends State<SearchLicense> {
                                   title: Text(
                                     docs[index]['License_Number'],
                                     style: TextStyle(
-                                      fontSize: 20.h,
+                                      fontSize: 18.h,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -153,7 +164,7 @@ class _SearchLicenseState extends State<SearchLicense> {
                                                 '\n' +
                                                 docs[index]['License_Wasama'],
                                             style: TextStyle(
-                                              fontSize: 18.h,
+                                              fontSize: 16.h,
                                               fontWeight: FontWeight.w400,
                                             ),
                                           ),
@@ -180,7 +191,7 @@ class _SearchLicenseState extends State<SearchLicense> {
                             margin: EdgeInsets.symmetric(vertical: 5),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20.h),
-                              color: const Color.fromARGB(100, 277, 239, 251),
+                              color: Colors.white,
                             ),
                             child: Center(
                               child: GestureDetector(
@@ -202,7 +213,7 @@ class _SearchLicenseState extends State<SearchLicense> {
                                   title: Text(
                                     docs[index]['License_Number'],
                                     style: TextStyle(
-                                      fontSize: 20.h,
+                                      fontSize: 18.h,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -224,7 +235,7 @@ class _SearchLicenseState extends State<SearchLicense> {
                                                 '\n' +
                                                 docs[index]['License_Wasama'],
                                             style: TextStyle(
-                                              fontSize: 18.h,
+                                              fontSize: 16.h,
                                               fontWeight: FontWeight.w400,
                                             ),
                                           ),
