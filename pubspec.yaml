@@ -49,6 +49,8 @@ dependencies:
   flutter_image_compress: ^2.0.3
   get: ^4.6.5
   full_screen_image: ^2.0.0
+  connectivity_plus: ^4.0.1
+  internet_connection_checker: ^1.0.0+1
 
 dev_dependencies:
   flutter_test:
