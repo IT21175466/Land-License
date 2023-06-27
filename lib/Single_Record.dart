@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
+import 'Search_License.dart';
+
 // ignore: must_be_immutable
 class SingleRecord extends StatefulWidget {
   String? id;
@@ -14,7 +16,6 @@ class SingleRecord extends StatefulWidget {
 class _SingleRecordState extends State<SingleRecord> {
   bool loading = false;
   bool imageLoading = false;
-  bool deleting = false;
   String? id;
   _SingleRecordState(this.id);
 
@@ -35,10 +36,7 @@ class _SingleRecordState extends State<SingleRecord> {
   }
 
   void deleteData(String uId) async {
-    setState(() {
-      deleting = true;
-      print(deleting);
-    });
+
     await FirebaseFirestore.instance
         .collection('All_Land_Licenses')
         .doc(uId)
@@ -46,6 +44,7 @@ class _SingleRecordState extends State<SingleRecord> {
   }
 
   Future<void> deleteImages(String docID) async {
+
     try {
       final ListResult list =
           await FirebaseStorage.instance.ref(docID).listAll();
@@ -55,20 +54,11 @@ class _SingleRecordState extends State<SingleRecord> {
         await item.delete();
       }
 
-      setState(() {
-        deleting = false;
-        print(deleting);
-      });
 
-      /*Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => SearchLicense(),
-        ),
-      );*/
     } catch (e) {
       print('Error deleting images: $e');
     }
+
   }
 
   void getData(String uId) async {
@@ -313,23 +303,26 @@ class _SingleRecordState extends State<SingleRecord> {
                                   "මෙම බලපත්‍රය සහ එම තොරතුරු සියල්ල ඉවත් වී යයි. ඔබට ඉවත් කිරීමට අවශ්‍යද?"),
                               actions: <Widget>[
                                 TextButton(
-                                  child: deleting
-                                      ? Text(
-                                          "ඔව්. ",
-                                          style: TextStyle(
-                                            color: Colors.redAccent,
-                                          ),
-                                        )
-                                      : Text(
+                                  child: Text(
                                           "ඔව්. ඉවත් කරන්න",
                                           style: TextStyle(
                                             color: Colors.redAccent,
                                           ),
                                         ),
                                   onPressed: () {
+
                                     print(id!);
                                     deleteData(id!);
                                     deleteImages(id!);
+
+
+                                    Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                    builder: (context) => SearchLicense(),
+                                    ),
+
+                                    );
                                   },
                                 ),
                                 TextButton(
