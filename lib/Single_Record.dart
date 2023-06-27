@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // ignore: must_be_immutable
 class SingleRecord extends StatefulWidget {
@@ -15,6 +14,7 @@ class SingleRecord extends StatefulWidget {
 class _SingleRecordState extends State<SingleRecord> {
   bool loading = false;
   bool imageLoading = false;
+  bool deleting = false;
   String? id;
   _SingleRecordState(this.id);
 
@@ -35,15 +35,40 @@ class _SingleRecordState extends State<SingleRecord> {
   }
 
   void deleteData(String uId) async {
+    setState(() {
+      deleting = true;
+      print(deleting);
+    });
     await FirebaseFirestore.instance
         .collection('All_Land_Licenses')
         .doc(uId)
         .delete();
   }
 
-  void deleteStorageFolder(String folderPath) async {
-    final storageReference = FirebaseStorage.instance.ref().child(folderPath);
-    await storageReference.delete();
+  Future<void> deleteImages(String docID) async {
+    try {
+      final ListResult list =
+          await FirebaseStorage.instance.ref(docID).listAll();
+      final List<Reference> items = list.items;
+
+      for (Reference item in items) {
+        await item.delete();
+      }
+
+      setState(() {
+        deleting = false;
+        print(deleting);
+      });
+
+      /*Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SearchLicense(),
+        ),
+      );*/
+    } catch (e) {
+      print('Error deleting images: $e');
+    }
   }
 
   void getData(String uId) async {
@@ -88,14 +113,14 @@ class _SingleRecordState extends State<SingleRecord> {
           ? AlertDialog(
               title: Text("මඳක් රැඳී සිටින්න..."),
               content: SizedBox(
-                height: 100.h,
-                width: 100.h,
+                height: 100,
+                width: 100,
                 child: Center(
                   child: Column(
                     children: [
                       Text("දත්ත ලබාගනිමින් පවතී."),
                       SizedBox(
-                        height: 20.h,
+                        height: 20,
                       ),
                       CircularProgressIndicator(
                         color: Colors.blueAccent,
@@ -110,7 +135,7 @@ class _SingleRecordState extends State<SingleRecord> {
           : SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.symmetric(
-                  horizontal: 10.w,
+                  horizontal: 10,
                 ),
                 child: Column(
                   children: [
@@ -132,14 +157,14 @@ class _SingleRecordState extends State<SingleRecord> {
                           title: Text(
                             'බලපත්‍ර අංකය :',
                             style: TextStyle(
-                              fontSize: 18.h,
+                              fontSize: 18,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
                           subtitle: Text(
                             '$licenseNumber',
                             style: TextStyle(
-                              fontSize: 20.h,
+                              fontSize: 20,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -158,14 +183,14 @@ class _SingleRecordState extends State<SingleRecord> {
                           title: Text(
                             'බලපත්‍ර හිමියාගේ නම :',
                             style: TextStyle(
-                              fontSize: 18.h,
+                              fontSize: 18,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
                           subtitle: Text(
                             '$licenseName',
                             style: TextStyle(
-                              fontSize: 20.h,
+                              fontSize: 20,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -184,14 +209,14 @@ class _SingleRecordState extends State<SingleRecord> {
                           title: Text(
                             'බලපත්‍ර හිමියාගේ ලිපිනය :',
                             style: TextStyle(
-                              fontSize: 18.h,
+                              fontSize: 18,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
                           subtitle: Text(
                             '$licenseAddress',
                             style: TextStyle(
-                              fontSize: 20.h,
+                              fontSize: 20,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -210,14 +235,14 @@ class _SingleRecordState extends State<SingleRecord> {
                           title: Text(
                             'වසම :',
                             style: TextStyle(
-                              fontSize: 18.h,
+                              fontSize: 18,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
                           subtitle: Text(
                             '$licenseWasama',
                             style: TextStyle(
-                              fontSize: 20.h,
+                              fontSize: 20,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -225,17 +250,17 @@ class _SingleRecordState extends State<SingleRecord> {
                       ),
                     ),
                     SizedBox(
-                      height: 10.h,
+                      height: 10,
                     ),
                     Text(
                       'බලපත්‍රයේ චායාරූප',
                       style: TextStyle(
-                        fontSize: 18.h,
+                        fontSize: 18,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
                     SizedBox(
-                      height: 10.h,
+                      height: 10,
                     ),
                     if (frontImageUrl != null)
                       Image.network(
@@ -255,7 +280,7 @@ class _SingleRecordState extends State<SingleRecord> {
                         },
                       ),
                     SizedBox(
-                      height: 20.h,
+                      height: 20,
                     ),
                     if (backImageUrl != null)
                       Image.network(
@@ -275,7 +300,7 @@ class _SingleRecordState extends State<SingleRecord> {
                         },
                       ),
                     SizedBox(
-                      height: 20.h,
+                      height: 20,
                     ),
                     ElevatedButton(
                       onPressed: () {
@@ -288,20 +313,23 @@ class _SingleRecordState extends State<SingleRecord> {
                                   "මෙම බලපත්‍රය සහ එම තොරතුරු සියල්ල ඉවත් වී යයි. ඔබට ඉවත් කිරීමට අවශ්‍යද?"),
                               actions: <Widget>[
                                 TextButton(
-                                  child: Text(
-                                    "ඔව්. ඉවත් කරන්න",
-                                    style: TextStyle(
-                                      color: Colors.redAccent,
-                                    ),
-                                  ),
+                                  child: deleting
+                                      ? Text(
+                                          "ඔව්. ",
+                                          style: TextStyle(
+                                            color: Colors.redAccent,
+                                          ),
+                                        )
+                                      : Text(
+                                          "ඔව්. ඉවත් කරන්න",
+                                          style: TextStyle(
+                                            color: Colors.redAccent,
+                                          ),
+                                        ),
                                   onPressed: () {
                                     print(id!);
                                     deleteData(id!);
-                                    deleteStorageFolder('images/$id');
-                                    Navigator.of(dialogContext).pop();
-                                    Navigator.of(context)
-                                        .pushNamedAndRemoveUntil(
-                                            '/home', (route) => false);
+                                    deleteImages(id!);
                                   },
                                 ),
                                 TextButton(
@@ -321,23 +349,23 @@ class _SingleRecordState extends State<SingleRecord> {
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.h),
+                            borderRadius: BorderRadius.circular(30),
                           ),
                         ),
                         minimumSize:
-                            MaterialStateProperty.all<Size>(Size(370.w, 65.h)),
+                            MaterialStateProperty.all<Size>(Size(370, 65)),
                       ),
                       child: Text(
                         'බලපත්‍රය ඉවත් කරන්න',
                         style: TextStyle(
-                          fontSize: 15.h,
+                          fontSize: 15,
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
                     SizedBox(
-                      height: 20.h,
+                      height: 20,
                     ),
                   ],
                 ),

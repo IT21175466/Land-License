@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:land_license/Home_Page.dart';
 import 'package:uuid/uuid.dart';
 import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,6 +37,9 @@ class _AddLicenseState extends State<AddLicense> {
   String backImageUrl = '';
 
   bool loading = false;
+  bool uploaded = false;
+  bool uploadedFrontImage = false;
+  bool? deleting;
 
   TextEditingController _LicenseNumberController = TextEditingController();
   TextEditingController _LicenseNameController = TextEditingController();
@@ -53,6 +57,7 @@ class _AddLicenseState extends State<AddLicense> {
     setState(() {
       backImage = File(bImage!.path);
       print(bImage.path);
+      uploaded = true;
     });
 
     String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
@@ -65,6 +70,7 @@ class _AddLicenseState extends State<AddLicense> {
     try {
       setState(() {
         loading = true;
+        uploaded = true;
       });
 
       UploadTask uploadTask =
@@ -75,6 +81,7 @@ class _AddLicenseState extends State<AddLicense> {
           // Upload completed successfully
           setState(() {
             loading = false;
+            uploaded = true;
           });
         }
         backImageUrl = await referenceImageToUpload.getDownloadURL();
@@ -92,12 +99,37 @@ class _AddLicenseState extends State<AddLicense> {
     }
   }
 
+  Future<void> deleteImages() async {
+    setState(() {
+      deleting = true;
+    });
+    try {
+      final ListResult list =
+          await FirebaseStorage.instance.ref(docID).listAll();
+      final List<Reference> items = list.items;
+
+      for (Reference item in items) {
+        await item.delete();
+      }
+
+      setState(() {
+        deleting = false;
+      });
+
+      //Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
+    } catch (e) {
+      print('Error deleting images: $e');
+    }
+  }
+
   Future getFrontImage() async {
     final image = await imagePicker.getImage(source: ImageSource.camera);
 
     setState(() {
       frontImage = File(image!.path);
       print(image.path);
+      uploadedFrontImage = true;
+      print(uploaded);
     });
 
     String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
@@ -110,13 +142,16 @@ class _AddLicenseState extends State<AddLicense> {
     try {
       setState(() {
         loading = true;
+        uploadedFrontImage = true;
       });
+
       UploadTask uploadTask = referenceImageToUpload.putFile(File(image!.path));
       uploadTask.then((TaskSnapshot taskSnapshot) async {
         if (taskSnapshot.state == TaskState.success) {
           // Upload completed successfully
           setState(() {
             loading = false;
+            uploadedFrontImage = true;
           });
         }
         frontImageUrl = await referenceImageToUpload.getDownloadURL();
@@ -152,6 +187,26 @@ class _AddLicenseState extends State<AddLicense> {
     );
   }
 
+  void alreadyUploaded() {
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          //title: Text("දෝශයකි..!"),
+          content: Text("දැනටමත් චායාරූපයක් ඇතුලත් කර තිබේ.!"),
+          actions: <Widget>[
+            TextButton(
+              child: Text("හරි"),
+              onPressed: () {
+                Navigator.of(dialogContext).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   void emptyImages() {
     showDialog(
       context: context,
@@ -170,6 +225,51 @@ class _AddLicenseState extends State<AddLicense> {
         );
       },
     );
+  }
+
+  Future<bool?> backPressed(BuildContext context) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          content: Text("ඔබට ඉවත්වීමට අවශ්‍යද?"),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                "ඔව්",
+                style: TextStyle(
+                  color: Colors.redAccent,
+                ),
+              ),
+              onPressed: () {
+                if (uploaded == true ||
+                    uploadedFrontImage == true ||
+                    uploaded && uploadedFrontImage == true) {
+                  print(docID);
+                  deleteImages();
+
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil('/home', (route) => false);
+                } else {
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil('/home', (route) => false);
+                }
+              },
+            ),
+            TextButton(
+              child: Text(
+                "නැත",
+              ),
+              onPressed: () {
+                print(docID);
+                Navigator.of(dialogContext).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+    return null;
   }
 
   @override
@@ -281,85 +381,171 @@ class _AddLicenseState extends State<AddLicense> {
                       Row(
                         children: [
                           const Spacer(),
-                          GestureDetector(
-                            onTap: () {
-                              getFrontImage();
-                            },
-                            child: Container(
-                              width: 146.w,
-                              height: 112.h,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(13),
-                                color: const Color.fromARGB(50, 277, 277, 277),
-                                image: frontImage != null
-                                    ? DecorationImage(
-                                        image: FileImage(frontImage!),
-                                        fit: BoxFit.cover,
-                                      )
-                                    : null,
+                          if (uploadedFrontImage == true)
+                            GestureDetector(
+                              onTap: () {
+                                alreadyUploaded();
+                              },
+                              child: Container(
+                                width: 146.w,
+                                height: 112.h,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(13),
+                                  color:
+                                      const Color.fromARGB(50, 277, 277, 277),
+                                  image: frontImage != null
+                                      ? DecorationImage(
+                                          image: FileImage(frontImage!),
+                                          fit: BoxFit.cover,
+                                        )
+                                      : null,
+                                ),
+                                child: Column(
+                                  children: [
+                                    Spacer(),
+                                    Icon(
+                                      Icons.document_scanner,
+                                      size: 40.h,
+                                      color: Colors.black54,
+                                    ),
+                                    SizedBox(
+                                      height: 10.h,
+                                    ),
+                                    Text(
+                                      "ඉදිරිපස",
+                                      style: TextStyle(
+                                          fontSize: 15.h,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    Spacer(),
+                                  ],
+                                ),
                               ),
-                              child: Column(
-                                children: [
-                                  Spacer(),
-                                  Icon(
-                                    Icons.document_scanner,
-                                    size: 40.h,
-                                    color: Colors.black54,
-                                  ),
-                                  SizedBox(
-                                    height: 10.h,
-                                  ),
-                                  Text(
-                                    "ඉදිරිපස",
-                                    style: TextStyle(
-                                        fontSize: 15.h,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  Spacer(),
-                                ],
+                            )
+                          else
+                            GestureDetector(
+                              onTap: () {
+                                getFrontImage();
+                              },
+                              child: Container(
+                                width: 146.w,
+                                height: 112.h,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(13),
+                                  color:
+                                      const Color.fromARGB(50, 277, 277, 277),
+                                  image: frontImage != null
+                                      ? DecorationImage(
+                                          image: FileImage(frontImage!),
+                                          fit: BoxFit.cover,
+                                        )
+                                      : null,
+                                ),
+                                child: Column(
+                                  children: [
+                                    Spacer(),
+                                    Icon(
+                                      Icons.document_scanner,
+                                      size: 40.h,
+                                      color: Colors.black54,
+                                    ),
+                                    SizedBox(
+                                      height: 10.h,
+                                    ),
+                                    Text(
+                                      "ඉදිරිපස",
+                                      style: TextStyle(
+                                          fontSize: 15.h,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    Spacer(),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
                           const Spacer(),
-                          GestureDetector(
-                            onTap: () {
-                              getBackImage();
-                            },
-                            child: Container(
-                              width: 146.w,
-                              height: 112.h,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(13),
-                                color: const Color.fromARGB(50, 277, 277, 277),
-                                image: backImage != null
-                                    ? DecorationImage(
-                                        image: FileImage(backImage!),
-                                        fit: BoxFit.cover,
-                                      )
-                                    : null,
+                          if (uploaded == true)
+                            GestureDetector(
+                              onTap: () {
+                                alreadyUploaded();
+                              },
+                              child: Container(
+                                width: 146.w,
+                                height: 112.h,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(13),
+                                  color:
+                                      const Color.fromARGB(50, 277, 277, 277),
+                                  image: backImage != null
+                                      ? DecorationImage(
+                                          image: FileImage(backImage!),
+                                          fit: BoxFit.cover,
+                                        )
+                                      : null,
+                                ),
+                                child: Column(
+                                  children: [
+                                    Spacer(),
+                                    Icon(
+                                      Icons.document_scanner,
+                                      size: 40.h,
+                                      color: Colors.black54,
+                                    ),
+                                    SizedBox(
+                                      height: 10.h,
+                                    ),
+                                    Text(
+                                      "පිටුපස",
+                                      style: TextStyle(
+                                          fontSize: 15.h,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    Spacer(),
+                                  ],
+                                ),
                               ),
-                              child: Column(
-                                children: [
-                                  Spacer(),
-                                  Icon(
-                                    Icons.document_scanner,
-                                    size: 40.h,
-                                    color: Colors.black54,
-                                  ),
-                                  SizedBox(
-                                    height: 10.h,
-                                  ),
-                                  Text(
-                                    "පිටුපස",
-                                    style: TextStyle(
-                                        fontSize: 15.h,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  Spacer(),
-                                ],
+                            )
+                          else
+                            GestureDetector(
+                              onTap: () {
+                                getBackImage();
+                              },
+                              child: Container(
+                                width: 146.w,
+                                height: 112.h,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(13),
+                                  color:
+                                      const Color.fromARGB(50, 277, 277, 277),
+                                  image: backImage != null
+                                      ? DecorationImage(
+                                          image: FileImage(backImage!),
+                                          fit: BoxFit.cover,
+                                        )
+                                      : null,
+                                ),
+                                child: Column(
+                                  children: [
+                                    Spacer(),
+                                    Icon(
+                                      Icons.document_scanner,
+                                      size: 40.h,
+                                      color: Colors.black54,
+                                    ),
+                                    SizedBox(
+                                      height: 10.h,
+                                    ),
+                                    Text(
+                                      "පිටුපස",
+                                      style: TextStyle(
+                                          fontSize: 15.h,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    Spacer(),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
                           const Spacer(),
                         ],
                       ),
@@ -418,9 +604,13 @@ class _AddLicenseState extends State<AddLicense> {
                                       TextButton(
                                         child: const Text("හරි"),
                                         onPressed: () {
-                                          Navigator.of(context)
-                                              .pushNamedAndRemoveUntil(
-                                                  '/home', (route) => false);
+                                          Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => HomePage(),
+                                            ),
+                                            (route) => false,
+                                          );
                                         },
                                       ),
                                     ],

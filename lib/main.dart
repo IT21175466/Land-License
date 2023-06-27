@@ -4,23 +4,12 @@ import 'package:land_license/Home_Page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:land_license/Search_License.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'firebase_options.dart';
-import 'package:device_preview/device_preview.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp();
 
-  runApp(
-    DevicePreview(
-      enabled: true,
-      tools: [
-        ...DevicePreview.defaultTools,
-      ],
-      builder: (context) => const MyApp(),
-    ),
-  );
-  //runApp(const MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
