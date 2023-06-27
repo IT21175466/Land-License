@@ -1,10 +1,7 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,7 +11,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   late StreamSubscription subscription;
   var isDeviceConnected = false;
   bool isAlertSet = false;
@@ -28,7 +24,7 @@ class _HomePageState extends State<HomePage> {
     getDocumentCount();
   }
 
-  void showDialogBox(){
+  void showDialogBox() {
     AlertDialog(
       title: Text("දෝශයකි! "),
       content: SizedBox(
@@ -37,11 +33,11 @@ class _HomePageState extends State<HomePage> {
         child: Center(
           child: Column(
             children: [
-              Text("අන්තර්ජාලය සමඟ සම්බන්ධ වී නැත.\n (Please Turn On WiFi or Mobile Data))"),
+              Text(
+                  "අන්තර්ජාලය සමඟ සම්බන්ධ වී නැත.\n (Please Turn On WiFi or Mobile Data))"),
               SizedBox(
                 height: 20,
               ),
-
             ],
           ),
         ),
@@ -49,7 +45,6 @@ class _HomePageState extends State<HomePage> {
       actions: <Widget>[],
     );
   }
-
 
   void getDocumentCount() {
     FirebaseFirestore.instance
