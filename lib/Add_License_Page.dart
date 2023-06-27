@@ -39,7 +39,6 @@ class _AddLicenseState extends State<AddLicense> {
   bool loading = false;
   bool uploaded = false;
   bool uploadedFrontImage = false;
-  bool? deleting;
 
   TextEditingController _LicenseNumberController = TextEditingController();
   TextEditingController _LicenseNameController = TextEditingController();
@@ -52,7 +51,8 @@ class _AddLicenseState extends State<AddLicense> {
   final imagePicker = ImagePicker();
 
   Future getBackImage() async {
-    final bImage = await imagePicker.getImage(source: ImageSource.camera,imageQuality: 70);
+    final bImage = await imagePicker.getImage(
+        source: ImageSource.camera, imageQuality: 70);
 
     setState(() {
       backImage = File(bImage!.path);
@@ -100,7 +100,6 @@ class _AddLicenseState extends State<AddLicense> {
   }
 
   Future<void> deleteImages() async {
-
     try {
       final ListResult list =
           await FirebaseStorage.instance.ref(docID).listAll();
@@ -110,8 +109,6 @@ class _AddLicenseState extends State<AddLicense> {
         await item.delete();
       }
 
-
-
       //Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
     } catch (e) {
       print('Error deleting images: $e');
@@ -119,7 +116,8 @@ class _AddLicenseState extends State<AddLicense> {
   }
 
   Future getFrontImage() async {
-    final image = await imagePicker.getImage(source: ImageSource.camera,imageQuality: 70);
+    final image = await imagePicker.getImage(
+        source: ImageSource.camera, imageQuality: 70);
 
     setState(() {
       frontImage = File(image!.path);
@@ -224,32 +222,26 @@ class _AddLicenseState extends State<AddLicense> {
   }
 
   Future<bool?> backPressed(BuildContext context) async {
+    if (uploaded == true ||
+        uploadedFrontImage == true ||
+        uploaded && uploadedFrontImage == true) {
+      print(docID);
+      deleteImages();
 
-                if (uploaded == true ||
-                    uploadedFrontImage == true ||
-                    uploaded && uploadedFrontImage == true) {
-                  print(docID);
-                  deleteImages();
-
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil('/home', (route) => false);
-                } else {
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil('/home', (route) => false);
-                }
-
+      Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
+    } else {
+      Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
+    }
 
     return null;
   }
-
-
 
   @override
   Widget build(BuildContext context) {
     pd = ProgressDialog(context: context);
 
     return WillPopScope(
-      onWillPop: () async{
+      onWillPop: () async {
         backPressed(context);
         return true;
       },
@@ -274,31 +266,30 @@ class _AddLicenseState extends State<AddLicense> {
               vertical: 20.h,
               horizontal: 10.h,
             ),
-            child: loading?
-            AlertDialog(
-              title: Text("මඳක් රැඳී සිටින්න..."),
-              content: SizedBox(
-                height: 100,
-                width: 100,
-                child: Center(
-                  child: Column(
-                    children: [
-                      //Text("දත්ත ලබාගනිමින් පවතී."),
-                      SizedBox(
-                        height: 20,
+            child: loading
+                ? AlertDialog(
+                    title: Text("මඳක් රැඳී සිටින්න..."),
+                    content: SizedBox(
+                      height: 100,
+                      width: 100,
+                      child: Center(
+                        child: Column(
+                          children: [
+                            Text("දත්ත ලබාගනිමින් පවතී."),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            CircularProgressIndicator(
+                              color: Colors.blueAccent,
+                              backgroundColor: Colors.grey,
+                            ),
+                          ],
+                        ),
                       ),
-                      CircularProgressIndicator(
-                        color: Colors.blueAccent,
-                        backgroundColor: Colors.grey,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              actions: <Widget>[],
-            )
-
-           : SizedBox(
+                    ),
+                    actions: <Widget>[],
+                  )
+                : SizedBox(
                     child: Column(
                       children: [
                         TextField(
@@ -585,7 +576,8 @@ class _AddLicenseState extends State<AddLicense> {
                                             Navigator.pushAndRemoveUntil(
                                               context,
                                               MaterialPageRoute(
-                                                builder: (context) => HomePage(),
+                                                builder: (context) =>
+                                                    HomePage(),
                                               ),
                                               (route) => false,
                                             );
@@ -626,8 +618,8 @@ class _AddLicenseState extends State<AddLicense> {
                             backgroundColor:
                                 const MaterialStatePropertyAll<Color>(
                                     Colors.blueAccent),
-                            shape:
-                                MaterialStateProperty.all<RoundedRectangleBorder>(
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30.h),
                               ),
