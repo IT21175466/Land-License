@@ -52,7 +52,7 @@ class _AddLicenseState extends State<AddLicense> {
   final imagePicker = ImagePicker();
 
   Future getBackImage() async {
-    final bImage = await imagePicker.getImage(source: ImageSource.camera);
+    final bImage = await imagePicker.getImage(source: ImageSource.camera,imageQuality: 70);
 
     setState(() {
       backImage = File(bImage!.path);
@@ -119,7 +119,7 @@ class _AddLicenseState extends State<AddLicense> {
   }
 
   Future getFrontImage() async {
-    final image = await imagePicker.getImage(source: ImageSource.camera);
+    final image = await imagePicker.getImage(source: ImageSource.camera,imageQuality: 70);
 
     setState(() {
       frontImage = File(image!.path);
@@ -274,7 +274,31 @@ class _AddLicenseState extends State<AddLicense> {
               vertical: 20.h,
               horizontal: 10.h,
             ),
-            child:  SizedBox(
+            child: loading?
+            AlertDialog(
+              title: Text("මඳක් රැඳී සිටින්න..."),
+              content: SizedBox(
+                height: 100,
+                width: 100,
+                child: Center(
+                  child: Column(
+                    children: [
+                      //Text("දත්ත ලබාගනිමින් පවතී."),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      CircularProgressIndicator(
+                        color: Colors.blueAccent,
+                        backgroundColor: Colors.grey,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              actions: <Widget>[],
+            )
+
+           : SizedBox(
                     child: Column(
                       children: [
                         TextField(
